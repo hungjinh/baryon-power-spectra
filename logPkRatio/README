@@ -1,0 +1,29 @@
+Table body : log10(Pk_hydro/Pk_dmo) 
+1st column : log10(k), with k in unit h/Mpc (comoving scale)
+  (PkRatios are accurate over a range of k= [0.1, 30] for Eagle/MB2/Illustris and of k=[0.1, 10] for OWLS,
+   but they are extrapolated to k=1500 h/Mpc. 
+   For details of PkRatio computation/accuracy/extrapolation, see Appendix of arxiv:1809.01146.)
+
+Redshift information : redshift columns vary for different baryonic scenarios.
+
+IllustrisTNG100:
+z[13] = {3.71,3.49,3.28,2.90,2.44,2.1,1.74,1.41,1.04,0.7,0.35,0.18,0.0};
+
+HzAGN:
+z[11] = {4.9285,4.249,3.7384,3.33445,3.00295,1.96615,1.02715,0.519195,0.22878,0.017865,0.0};
+
+MB2:
+z[21] = {3.5,3.25,2.8,2.45,2.1,2.0,1.8,1.7,1.6,1.4,1.2,1.1,1.0,0.8,0.7,0.6,0.4,0.35,0.2,0.0625,0.0};
+
+Illustris:
+z[23] = {3.5,3.49,3.28,3.08,2.90,2.73,2.44,2.1,2.0,1.82,1.74,1.6,1.41,1.21,1.04,1.0,0.79,0.7,0.6,0.4,0.35,0.2,0.0};
+
+Eagle:
+z[13] = {3.53,3.02,2.48,2.24,2.01,1.74,1.49,1.26,1.0,0.74,0.5,0.27,0.0};
+
+owls-AGN,DBLIMFV1618,NOSN_NOZCOOL,NOZCOOL,REF,WDENS,WML1V848,WML4:
+z[16] = {3.5,3.25,3.0,2.75,2.25,2.00,1.75,1.50,1.25,1.00,0.75,0.50,0.375,0.25,0.125,0.0};
+
+owls-NOSN:
+z[15] = {3.5,3.25,3.0,2.75,2.25,2.00,1.75,1.50,1.25,1.00,0.75,0.50,0.375,0.25,0.0};
+
