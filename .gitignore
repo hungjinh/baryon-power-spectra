@@ -1,10 +1,28 @@
+# specific ignore files for this repo
+build
+baryons.h
+
+# Compiled source
 *.o
 *.out
 *.so
+*.exe
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+
+# python 
+__pycache__
 *.pyc
-*.a
+
+
+# vscode
+.vscode/*
+
+
+# OS generated files
+.DS_Store
+.DS_Store?
 ._*
 *~
-.DS_Store
-.ipynb_checkpoints
-.vscode
