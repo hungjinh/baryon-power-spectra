@@ -46,6 +46,12 @@ class PCA():
                 
                 COV: ndarray, NxN
                     covariance subjected to the (scale-cutted) data vector
+            
+            Properties:
+                self.PCs: the dictionary that stores principal components
+                    self.PCs[0]: the 1st PC
+                    self.PCs[1]: the 2nd PC, ...
+                    self.PCs[self.Nscenario-1]: the last PC
         '''
 
         self.pars = pars
@@ -55,6 +61,7 @@ class PCA():
 
         self._init_COV(COV)
         
+        self.PCs = self.gen_PC_dict()
 
     def _init_COV(self, COV):
         '''init quantities related to covariance matrix'''
@@ -65,18 +72,55 @@ class PCA():
         self.L = np.linalg.cholesky(COV)
         self.invL = np.linalg.inv(self.L)
 
-    def build_Ratio(self, pars=None):
-        '''Build the Ratio matrix (at the given pars)
-            Returns:
-                Ratio: ndarray (self.Ndata x self.Nscenario)
+    def build_Ratio(self):
+        '''Build the Ratio matrix
+            self.Ratio: ndarray (self.Ndata x self.Nscenario)
+        '''
+        
+        self.Ratio = np.zeros((self.Ndata, self.Nscenario))
+        self.modelv_dmo = model_DMO(self.pars)
+
+        for j, scenario in enumerate(self.simKeys):
+            modelv_bary = model_bary(self.pars, scenario)
+            self.Ratio.T[j] = modelv_bary/self.modelv_dmo
+        
+        self.Ratio -= 1.
+    
+    def build_Delta(self):
+        '''Build the difference matrix
+            self.Delta: ndarray (self.Ndata x self.Nscenario)
+        '''
+        DeltaT = self.Ratio.T*self.modelv_dmo-self.modelv_dmo
+        self.Delta = DeltaT.T
+    
+    def build_wDelta(self):
+        '''Build the covariance weighted difference matrix'''
+        self.wDelta = np.dot(self.invL, self.Delta)
+
+    def SVD(self, Matrix=None):
+        '''compute PCA given the input matrix
+            default Matrix to build PCs: self.wDelta
+
+            self.U matrix stroes the PCs.
+            PC1 = self.U.T[0]
+            PC2 = self.U.T[1]
         '''
 
-        if pars is None:
-            pars = self.pars
+        if Matrix is None:
+            Matrix = self.wDelta
+
+        self.U, self.Sdig, VT = np.linalg.svd(Matrix, full_matrices=True)
+    
+    def gen_PC_dict(self):
+
+        self.build_Ratio()
+        self.build_Delta()
+        self.build_wDelta()
+        self.SVD(Matrix=self.wDelta)
+
+        PCs = {}
+        for j in range(self.Nscenario):
+            PCs[j] = self.U.T[j]
         
-        Ratio = np.zeros((self.Ndata, self.Nscenario))
-        modelv_dmo = model_DMO(pars)
-
-        #for j in range()
-
+        return PCs
 
