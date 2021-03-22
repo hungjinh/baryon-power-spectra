@@ -20,8 +20,12 @@ def print_to_c_2d(array, arrName=None, max_line_width=80):
     if arrName is not None:
         print('static double '+arrName+f'[{Nrows}][{Ncols}] = ', end='')
     print('{', end='')
-    for i in range(Nrows):
+    for i in range(Nrows-1):
         print_to_c_1d(array[i, :], max_line_width=80)
+        print(',', end='')
+    
+    # for the last row
+    print_to_c_1d(array[-1, :], max_line_width=80)
     print('};', end='\n\n')
 
 
@@ -31,10 +35,10 @@ if __name__ == '__main__':
         $ python to_c_array.py mb2 >> baryons.h
 
         All available sim_key:
-            'TNG100', 'mb2', 'eagle', 'illustris', 'HzAGN'
-            'cowls_AGN_T80', 'cowls_AGN_T85', 'cowls_AGN_T87'
-            'BAHAMAS_T78', 'BAHAMAS_T76', 'BAHAMAS_T80'
-            'owls_AGN', 'owls_DBLIMFV1618', 'owls_NOSN_NOZCOOL', 'owls_NOSN', 'owls_NOZCOOL', 'owls_REF', 'owls_WDENS', 'owls_WML1V848', 'owls_WML4'
+            TNG100, mb2, eagle, illustris, HzAGN
+            cowls_AGN_T80, cowls_AGN_T85, cowls_AGN_T87
+            BAHAMAS_T78, BAHAMAS_T76, BAHAMAS_T80
+            owls_AGN, owls_DBLIMFV1618, owls_NOSN_NOZCOOL, owls_NOSN, owls_NOZCOOL, owls_REF, owls_WDENS, owls_WML1V848, owls_WML4
     '''
     sim_key = str(sys.argv[1])
     filename = f'logPkRatio_{sim_key}.dat'
