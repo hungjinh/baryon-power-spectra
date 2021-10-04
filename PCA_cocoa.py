@@ -1,6 +1,6 @@
 import numpy as np
 
-def model_DMO(pars):
+def model_dmo(pars):
     '''generate model vector given cosmologicl parameters from cocoa
         Args:
             pars: input parameters to run the the theoritical DMO model vector
@@ -78,7 +78,7 @@ class PCA():
         '''
         
         self.Ratio = np.zeros((self.Ndata, self.Nscenario))
-        self.modelv_dmo = model_DMO(self.pars)
+        self.modelv_dmo = model_dmo(self.pars)
 
         for j, scenario in enumerate(self.simKeys):
             modelv_bary = model_bary(self.pars, scenario)
@@ -124,3 +124,15 @@ class PCA():
         
         return PCs
 
+if __name__ == '__main__':
+    pars = {}
+    pars['Omega_m'] = 0.3
+    pars['A_s'] = 2.19e-9
+    pars['n_s'] = 0.97
+
+    #cov = np.load()
+    pca = PCA(pars, simKeys=['mb2', 'eagle', 'TNG100', 'illustris', 'cowls_AGN_T87'], cov=cov)
+    PC1 = pca.PCs[0]
+    PC2 = pca.PCs[1]
+
+    # etc...
